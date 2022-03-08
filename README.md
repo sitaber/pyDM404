@@ -2,6 +2,8 @@ The pyDM404 is a cross platform drum machine written in Python. The source code 
 
 The pyDM404 is more of a toy application than a serious piece of software; a project to explore what one can create with Pygame. The clunky user interface and other "features" impart a unique flavor to the application. The pyDM404 works great for drums, and can be used like old school samplers, such as the SP1200 or MPC60, to make whole beats.  
 
+![Screenshot](assets/screenshot-main.png)
+
 # Features
 - Tuning algorithm based on the SP1200's. Adjust sounds by +/- 12 semitones
 - Adjustable volume for each sound/channel
@@ -12,9 +14,6 @@ The pyDM404 is more of a toy application than a serious piece of software; a pro
 - Real time recording
 - "Step edit" mode (more like a clickable grid)
 - Save and load with "disks"
-
-
-![Screenshot](assets/screenshot-main.png)
 
 # Installation
 There are two ways to use pyDM404. 
