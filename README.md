@@ -21,7 +21,7 @@ There are two ways to use pyDM404.
 2) Run from source
 
 # 1. Executable
-There is an executable available for Windows (7/8/10) and for Ubuntu (18.04/20.04) that were packaged with [pyisnatller](https://pypi.org/project/pyinstaller/). To obtain the executable, go to the release page and download the proper zip file for your platform, unzip and open the unzipped folder. 
+There is an executable available for Windows (7/8/10) and for Ubuntu (18.04/20.04) that were packaged with [pyisnatller](https://pypi.org/project/pyinstaller/). To obtain the executable, go to the [release](https://github.com/sitaber/pyDM404/releases) page and download the proper zip file for your platform, unzip and open the unzipped folder. 
 To run:
 - `Windows`: Just double click and your good to go
 - `Linux`: Make sure the program has permission to run
@@ -33,10 +33,8 @@ To run:
     ```
 **NOTE**: You must run the executable from the pyDM404 directory
 
-
-
-### Quick Start
-Now you made it this far, how do you use pyDM404? See the quick start [manual](assets/QuickStart.pdf)
+## Quick Start
+Now that you have the executable, how do you use pyDM404? See the quick start [manual](assets/QuickStart.pdf)
 
 # 2. Run From Source
 To run the source code you will need
