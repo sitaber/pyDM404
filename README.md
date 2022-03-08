@@ -23,13 +23,13 @@ There are two ways to use pyDM404.
 # 1. Executable
 There is an executable available for Windows (7/8/10) and for Ubuntu (18.04/20.04) that were packaged with [pyisnatller](https://pypi.org/project/pyinstaller/). To obtain the executable, go to the [release](https://github.com/sitaber/pyDM404/releases) page and download the proper zip file for your platform, unzip and open the unzipped folder. 
 To run:
-- `Windows`: Just double click and your good to go
+- `Windows`: Just double click `pydm404-win64.exe` and your good to go
 - `Linux`: Make sure the program has permission to run
     - Press <kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>T</kbd> to open the shell, navigate to the unzipped folder, change the file permissions for the executable, then run it
     ```bash
     $ cd path/to/extracted/folder
-    $ chmod +x pyDM404
-    $ ./pyDM404
+    $ chmod +x pydm404
+    $ ./pydm404
     ```
 **NOTE**: You must run the executable from the pyDM404 directory
 
