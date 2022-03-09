@@ -749,7 +749,9 @@ class DrumMachine():
         running = True
         click = False
         DIR_CONTENTS = os.listdir("DISKS")
+        #print(os.getcwd())
         DIR_CONTENTS.sort()
+        #DIR_CONTENTS.remove("BLANK")
         selected = np.zeros((len(DIR_CONTENTS)), dtype=int)
         button_select = None
        
@@ -790,7 +792,9 @@ class DrumMachine():
                 if event.type == KEYDOWN:
                     if event.key == K_ESCAPE:
                         running = False
-                    if event.key == K_F1:
+                    if event.key == K_F1 and button_select:
+                        #print(selected)
+                        #print(np.nonzero(selected)[0][0])
                         DISK = DIR_CONTENTS[np.nonzero(selected)[0][0]]
                         if load:
                             snd_path = "DISKS/"+DISK+"/samples/"
