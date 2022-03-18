@@ -1,4 +1,4 @@
-The pyDM404 is a cross platform drum machine written in Python. The source code will run on any machine the can install its dependencies. Executable binaries are available for Windows (7/10) and Ubuntu Linux 20.04 LTS (Focal Fossa).
+The pyDM404 is a cross platform drum machine written in Python. The source code will run on any machine that can install its dependencies. Executable binaries are available for Windows (7/10) and Ubuntu Linux 20.04 LTS (Focal Fossa).
 
 The pyDM404 is more of a toy application than a serious piece of software; a project to explore what one can create with Pygame. Miscellaneous bugs, the clunky user interface and other "features" impart a unique flavor to the application. The pyDM404 works great for drums, and can be used like old school samplers, such as the SP1200 or MPC60, to make whole beats.  
 
