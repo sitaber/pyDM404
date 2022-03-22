@@ -66,11 +66,12 @@ Once you have met all dependacies, download/clone the repo and run `main.py` to 
 - Pressing <kbd>ESC</kbd> no longer closes the application when on the main screen
 
 ### GUI
+- The **BLANK** disk is no longer displayed in the **LOAD/SAVE** menus
 - Made GUI colors more consistent.
     - **LOAD/SAVE** menus: Made the selection boxes white when not selected and red when selected
     - **ASSN SND** menu: Made the selection boxes white when not selected and red when selected. Select-able sounds now have a green select box
     - **MAIN SCREEN**: **REC** button is no longer red
-    - The **BLANK** disk is no longer displayed in the **LOAD/SAVE** menus
+    
 
 ### BEHAVIOR
 - Sequencer now stops playback when entering the **LOAD/SAVE** or **ASSN SND** menus
