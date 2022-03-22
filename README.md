@@ -1,8 +1,12 @@
-The pyDM404 is a cross platform drum machine written in Python. The source code will run on any machine that can install its dependencies. Executable binaries are available for Windows (7/10) and Ubuntu Linux 20.04 LTS (Focal Fossa).
+# pyDM404
+The pyDM404 (or python Drum Machine 404) is a cross platform drum machine written in Python. The source code will run on any machine that can install its dependencies. Executable binaries are available for Windows (7/10) and Ubuntu Linux 20.04 LTS (Focal Fossa).
 
 The pyDM404 is more of a toy application than a serious piece of software; a project to explore what one can create with Pygame. Miscellaneous bugs, the clunky user interface and other "features" impart a unique flavor to the application. The pyDM404 works great for drums, and can be used like old school samplers, such as the SP1200 or MPC60, to make whole beats.  
 
-![Screenshot](assets/screenshot-main.png)
+### UPDATE
+Version 1.2 is now out. See [Change Log](#Change-Log) for details
+
+![Screenshot](assets/screenshot.png)
 
 # Features
 - Tuning algorithm based on the SP1200's. Adjust sounds by +/- 12 semitones
@@ -43,7 +47,7 @@ To run the source code you will need
 - Pygame >= 2.1.2
 - NumPy >= 1.15 
 
-Pygame provides almost everything for us to create the application, and what it doesn't, we implement with pure Python. 
+Pygame and numpy provide almost everything for us to create the application, and they don't, we implement with pure Python. 
 
 ## How it Works
 The code is broken into 3 parts:
@@ -55,6 +59,28 @@ https://github.com/ElliotGarbus/MidiClockGenerator
 
 Once you have met all dependacies, download/clone the repo and run `main.py` to start the application
 
+# Change Log
+## Version 1.2
+### Controls
+- <kbd>SPACEBAR</kbd>: can now be used to toggle play
+- <kbd>Q</kbd>, <kbd>W</kbd>, <kbd>E</kbd>, and <kbd>R</kbd>: can now be used to select LCD menu buttons
+- Pressing <kbd>ESC</kbd> no longer closes the application when on the main screen
+
+### GUI
+- Made GUI colors more consistent.
+    - **LOAD/SAVE** menus: Made the selection boxes white when not seleceted and red when selected
+    - **ASSN SND** menu: Made the selection boxes white when not seleceted and red when selected. Selectable sounds now have a green select box
+    - **MAIN SCREEN**: **REC** button is no longer red
+
+### BEHAVIOR
+- Sequencer now stops playback when entering the **LOAD/SAVE** or **ASSN SND** menus
+- **Changing sequence:** In version 1.0, changing the sequence was always immediate. In version 1.2, if the sequencer is stopped, changing the sequence is instant, but if the sequencer is _playing_, the next sequence will be "queued", indicated by a * next to the sequence number. Once the current sequence reaches its end, the queued sequence will take effect. Stopping playback before changing to a queued sequence will cause to the current sequence to remain active
+
+### CODE
+- Added checks to "cleanup" the clock process more effectively  
+- Flattened large sections of the code to improve readability
+- Moved related actions into Sequencer class as methods
+  
 # TODO
 List of some ideas for continuing the project 
 
@@ -78,7 +104,4 @@ In no particular order
     - Requires changes to step edit grid
 - Clickable Pads to play back sounds
 
-### The Code
-- Reworking functions and classes for clarity and performance
-- Sequence class expanded to accept velocites and export to midi files 
-- and more...
+
