@@ -3,8 +3,7 @@ The pyDM404 (or python Drum Machine 404) is a cross platform drum machine writte
 
 The pyDM404 is more of a toy application than a serious piece of software; a project to explore what one can create with Pygame. Miscellaneous bugs, the clunky user interface and other "features" impart a unique flavor to the application. The pyDM404 works great for drums, and can be used like old school samplers, such as the SP1200 or MPC60, to make whole beats.  
 
-### UPDATE
-Version 1.2 is now out. See [Change Log](#Change-Log) for details
+**UPDATE**: Version 1.2 is now out. See [Change Log](#Change-Log) for details and [release](https://github.com/sitaber/pyDM404/releases) fro the new executable
 
 ![Screenshot](assets/screenshot.png)
 
@@ -68,8 +67,8 @@ Once you have met all dependacies, download/clone the repo and run `main.py` to 
 
 ### GUI
 - Made GUI colors more consistent.
-    - **LOAD/SAVE** menus: Made the selection boxes white when not seleceted and red when selected
-    - **ASSN SND** menu: Made the selection boxes white when not seleceted and red when selected. Selectable sounds now have a green select box
+    - **LOAD/SAVE** menus: Made the selection boxes white when not selected and red when selected
+    - **ASSN SND** menu: Made the selection boxes white when not selected and red when selected. Select-able sounds now have a green select box
     - **MAIN SCREEN**: **REC** button is no longer red
     - The **BLANK** disk is no longer displayed in the **LOAD/SAVE** menus
 
