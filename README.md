@@ -46,7 +46,7 @@ To run the source code you will need
 - Pygame >= 2.1.2
 - NumPy >= 1.15 
 
-Pygame and numpy provide almost everything for us to create the application, and they don't, we implement with pure Python. 
+Pygame and numpy provide almost everything for us to create the application, and what they don't, we implement with pure Python. 
 
 ## How it Works
 The code is broken into 3 parts:
