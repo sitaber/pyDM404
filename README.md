@@ -71,6 +71,7 @@ Once you have met all dependacies, download/clone the repo and run `main.py` to 
     - **LOAD/SAVE** menus: Made the selection boxes white when not seleceted and red when selected
     - **ASSN SND** menu: Made the selection boxes white when not seleceted and red when selected. Selectable sounds now have a green select box
     - **MAIN SCREEN**: **REC** button is no longer red
+    - The **BLANK** disk is no longer displayed in the **LOAD/SAVE** menus
 
 ### BEHAVIOR
 - Sequencer now stops playback when entering the **LOAD/SAVE** or **ASSN SND** menus
