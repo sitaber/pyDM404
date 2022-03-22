@@ -2,7 +2,7 @@
 # pyDM404 - A cross platform Drum Sequencer
 # Author: Scott Taber
 # File: app.py - Nuts and bolts of application
-#
+# Version: 1.2
 # Contains all functions and classes for drawing to screen, getting user input
 # loading and saving files, starting and stoping clock process, etc.
 # -----------------------------------------------------------------------------
@@ -102,74 +102,83 @@ class Sequencer():
     def __init__(self, send_conn):
         self.send_conn = send_conn
         self.clock = None
-        #self.midi_ports = pygame.midi.get_default_output_id()
-        #self.midi_output = pygame.midi.Output(pygame.midi.get_default_output_id())
         self.state = 0
         for val in self.__transport__:
             setattr(self, val, 0)
+            
         self.sequences = [self.make_seq() for i in range(8)]
         self.current_seq = self.sequences[self.seq_num]
+        self.queued_seq = None
         # Need two sequences, one for recording and one for play back
         self.seq_record = self.current_seq[0]
         self.seq_play = self.current_seq[1]
     
+    def make_seq(self, length = 2 ):
+        seq_record = np.zeros((8, 24*4*length), dtype='i,i') 
+        seq_play = seq_record.copy()
+        return [seq_record, seq_play]
+        
     def toggle(self):
-        if self.state == 0:
-            self.play()
-        elif self.state == 1:
-            self.stop() 
-    
-    def set_bpm(self):
-        if self.clock:
-            self.clock.shared_bpm.value = self.bpm
-                    
+        if self.state == 0: self.play()
+        elif self.state == 1: self.stop() 
+            
     def play(self):
         self.state = 1
         self.clock = mc.ClockGen()
         self.clock.shared_bpm.value = self.bpm
-        self.clock.launch_process(self.send_conn) # Explain how this works. 
-
+        self.clock.launch_process(self.send_conn) # Explain how this works.  
+    
     def stop(self):
+        self.clock.end_process()
+        self.copy()
+        self.state = 0
+        self.queued_seq = None
         for val in self.__transport__:
             setattr(self, val, 0)
-        self.state = 0
-        self.clock.end_process() 
-        self.copy()
+
+    def copy(self):
+        self.seq_play = self.seq_record.copy()      
     
+    def set_bpm(self, val):
+        self.bpm += val
+        if self.clock:
+            self.clock.shared_bpm.value = self.bpm
+    
+    def set_tc(self, val):
+        self.tc = max(0, min(4, self.tc+val))
+    
+    def change_seq(self, val):
+        if self.state == 1:
+            if self.queued_seq is not None:
+                self.queued_seq = max(0, min(7, self.queued_seq+val))
+            else: self.queued_seq = max(0, min(7, self.seq_num+val))
+
+        elif (self.recording == False or self.state == 0):
+            self.seq_num = max(0, min(7, self.seq_num+val))
+            self.current_seq = self.sequences[self.seq_num]
+            self.seq_record = self.current_seq[0]
+            self.seq_play = self.current_seq[1]
+            self.copy()
+     
     def step_end(self): 
-        # Call At end of main function ------------------------------------- #
+        # Call At end of main function
         self.pulse += 1
-        if self.pulse == self.seq_play.shape[1]:
-            self.pulse = 0
-        if self.pulse % 24 == 0:
-            self.beat += 1
+        if self.pulse == self.seq_play.shape[1]: self.pulse = 0
+        if self.pulse % 24 == 0: self.beat += 1
         if self.beat == 4:
             self.beat = 0
             self.bar += 1
-        if self.bar == self.seq_play.shape[1]//96:
+        if self.bar == 2:
             self.bar = 0 
-            self.copy()
+            self.copy() 
+            if self.queued_seq is not None:
+                self.current_seq = self.sequences[self.queued_seq]
+                self.seq_num = self.queued_seq 
+                self.queued_seq = None
+                self.seq_record = self.current_seq[0]
+                self.seq_play = self.current_seq[1]
+                self.copy()
 
-    def change_seq(self, up):
-        if up == True:
-            self.seq_num += 1
-            if self.seq_num == 8:
-                self.seq_num = 7
-        if up == False:
-            self.seq_num -= 1 
-            if self.seq_num < 0:
-                self.seq_num = 0
-        if up is None:
-            self.seq_num = 0
-        self.current_seq = self.sequences[self.seq_num]
-        self.seq_record = self.current_seq[0]
-        self.seq_play = self.current_seq[1]
-                        
-    def make_seq(self, length = 2 ):
-        seq_record = np.zeros((8, 24*4*length), dtype='i,i') # makes 8xN array of tuples [(0,0),(0,0),...
-        seq_play   = np.zeros((8, 24*4*length), dtype='i,i')
-        return [seq_record, seq_play]
-     
     def ekey_to_idx(self, ekey):
         pad_keys = [K_a,K_s,K_d,K_f,K_g,K_h,K_j,K_k]
         pad_idx = pad_keys.index(ekey)  
@@ -187,10 +196,7 @@ class Sequencer():
         self.seq_record[pad, self.pulse] = 0
         if whole:
             self.seq_record[pad, :] = 0
-    
-    def copy(self):
-        self.seq_play = self.seq_record.copy()     
-    
+
     def to_play(self, ekey):
         pad = self.ekey_to_idx(ekey)
         val   = self.seq_play[pad, self.pulse][0] 
@@ -392,7 +398,9 @@ class DrumMachine():
 
     def _draw_main(self, display_step):
         self.DISPLAY.fill((0,255,0)) 
-        seq = self.sequencer.seq_num
+        if self.sequencer.queued_seq is not None:
+            seq = str(self.sequencer.queued_seq) + '*'
+        else: seq = self.sequencer.seq_num
         bpm = self.sequencer.bpm
         c = [self.sequencer.bar+1,self.sequencer.beat+1,self.sequencer.pulse]
         c[2] = self.sequencer.pulse - 24 * self.sequencer.beat - 96 * self.sequencer.bar
@@ -448,7 +456,7 @@ class DrumMachine():
             func_text = self.font.render(b, True, (0,0,0))
             self.DISPLAY.blit(func_text, (76+(384/4)*x,53)) 
             
-        self.screen.blit(self.DISPLAY, (95,0))
+        self.screen.blit(self.DISPLAY, (95,0)) # DISPLAY IS LCD AREA - USE COOR SHIFT
         return
     
     def make_step_rects(self, step_bar_val):
@@ -461,8 +469,8 @@ class DrumMachine():
         length = steps[self.sequencer.tc]
         for i in range(8):
             for j in range(length):
-                self.step_rect.append(pygame.Rect(30+(384/length)*j,65+10*i, 384/length, 10))
-                self.step_rect2.append(pygame.Rect(95+30+(384/length)*j,65+10*i, 384/length, 10))
+                self.step_rect.append(pygame.Rect(30+(384/length)*j,65+10*i, 384/length, 10)) # DISPLAY COORDS
+                self.step_rect2.append(pygame.Rect(95+30+(384/length)*j,65+10*i, 384/length, 10)) # SHIFT MAIN SCREEN
         for i in range(8):
             for j in range(96*bar,96*(bar+1)): #range(self.sequencer.seq_play.shape[1]-1): # 
                 val = self.sequencer.seq_record[i, j][0] 
@@ -489,6 +497,12 @@ class DrumMachine():
         playrec_rects, playrec_text = make_playrec_rects(95, self.font, self.screen)
         buttons_down, buttons_up, text_rects, buttons_text1, buttons_text2 = make_control_rects(95, self.font)
         mix_tune_rect = pygame.Rect((8,348,20,20))
+
+        button_1 = pygame.Rect(start+15, 170, 50, 10)
+        button_2 = pygame.Rect(start+125,170, 50, 10)
+        button_3 = pygame.Rect(start+245, 170, 50, 10)
+        button_4 = pygame.Rect(start+360,170, 50, 10)
+        
         while True:
             self.screen.fill((0,0,0))
             
@@ -513,167 +527,139 @@ class DrumMachine():
                 r_pulse = int( ((rx - 30)/4)+96*step_bar_val)
                 self.fill_rect.pop(idx)
                 self.sequencer.step_edit(r_chan, r_pulse, False, self.pads)   
-            # ----------------- left, top, width, height ----------------- #
-            button_1 = pygame.Rect(start+15, 170, 50, 10)
-            button_2 = pygame.Rect(start+125,170, 50, 10)
-            button_3 = pygame.Rect(start+245, 170, 50, 10)
-            button_4 = pygame.Rect(start+360,170, 50, 10)
+
+            
+            clock_on = (self.sequencer.clock and self.sequencer.state == 1)
             
             if button_1.collidepoint((mx, my)):
-                if click and not display_step:
+                if (click and display_step): display_step = not display_step
+                elif (click and not display_step):
+                    if clock_on: self.sequencer.stop()   
                     self.load_menu()
-                elif click and display_step:
-                    display_step = not display_step
-            
+
             if button_2.collidepoint((mx, my)):
-                if click and not display_step:
+                if (click and display_step): step_bar_val = 0
+                elif (click and not display_step):
+                    if clock_on: self.sequencer.stop()   
                     self.assn_menu()
-                elif click and display_step:
-                    step_bar_val = 0
-            
+                         
             if button_3.collidepoint((mx, my)):
-                if click and not display_step:
-                    display_step = True
-                elif click and display_step: 
-                    step_bar_val = 1
-            
+                if (click and not display_step): display_step = True
+                elif (click and display_step): step_bar_val = 1
+                
             if button_4.collidepoint((mx, my)):
-                if click and not display_step:
+                if (click and not display_step):
+                    if clock_on: self.sequencer.stop()   
                     self.load_menu(load=False)
                               
-            for i,knob in enumerate(self.knobs):
-                if knob.collidepoint((mx,my)):
-                    if click:
-                        drag = True
-                        knob_drag = knob
-                        knob_idx = i
-                        break
-            
-            for r in func_rects:
-                pygame.draw.rect(self.screen, self.WHITE, r)            
+            idx = mouse_rect.collidelist(self.knobs)
+            if (idx != -1 and click):
+                knob_idx = idx
+                drag = True
+                knob_drag = self.knobs[knob_idx]
 
             if mix_tune_rect.collidepoint((mx, my)):
-                if click:
-                    volume = not volume 
+                if click: volume = not volume 
             
             select_down_idx = mouse_rect.collidelistall(buttons_down)
             if select_down_idx and click:
                 idx = select_down_idx[0]
-                if idx == 0:
-                    self.sequencer.change_seq(False)   
-                if idx == 1:
-                    self.sequencer.bpm -= 0.5
-                    self.sequencer.set_bpm()
-                if idx == 2:
-                    self.sequencer.tc -= 1
-                    if self.sequencer.tc < 0:    
-                        self.sequencer.tc = 0 
-                if idx == 3:
-                    self.sequencer.met_on = False
+                if idx == 0: self.sequencer.change_seq(-1)   
+                if idx == 1: self.sequencer.set_bpm(-0.5)    
+                if idx == 2: self.sequencer.set_tc(-1)
+                if idx == 3: self.sequencer.met_on = False
             
             select_up_idx = mouse_rect.collidelistall(buttons_up) 
             if select_up_idx and click:
                 idx = select_up_idx[0]
-                if idx == 0:
-                    self.sequencer.change_seq(True)   
-                if idx == 1:
-                    self.sequencer.bpm += 0.5
-                    self.sequencer.set_bpm()
-                if idx == 2:
-                    self.sequencer.tc += 1 
-                    if self.sequencer.tc == 5:    
-                        self.sequencer.tc = 4
-                if idx == 3:
-                    self.sequencer.met_on = True
+                if idx == 0: self.sequencer.change_seq(1)   
+                if idx == 1: self.sequencer.set_bpm(0.5)
+                if idx == 2: self.sequencer.set_tc(1)
+                if idx == 3: self.sequencer.met_on = True
                         
             select_playrec_idx = mouse_rect.collidelistall(playrec_rects) 
             if select_playrec_idx and click:
                 idx = select_playrec_idx[0]
+                if idx == 2: self.sequencer.recording = not self.sequencer.recording 
                 if idx == 0:
                     self.sequencer.toggle()
                     step = False
-                if idx == 2:
-                    self.sequencer.recording = not self.sequencer.recording           
+                          
            
             # 1) Check midi for pulse =>Step Start => Play met----------- #
             if self.receive_conn.poll():
                 _ignore = self.receive_conn.recv() 
                 step = True
-                if self.sequencer.pulse % 24 == 0 and self.sequencer.met_on and self.sequencer.state:
-                    pygame.mixer.Channel(0).play(self.met)   
+                if (self.sequencer.pulse % 24 == 0 and 
+                    self.sequencer.met_on and 
+                    self.sequencer.state): pygame.mixer.Channel(0).play(self.met)   
+            
             # 2) Get sounds to play and play them --------------- #
                 for pad in pad_keys:
                     val, pitch = self.sequencer.to_play(pad)
-                    if val:
-                        self.play(pad, pitch)
+                    if val: self.play(pad, pitch)
+            
             # 3a) Check user inputs
             click = False
             for event in pygame.event.get():
                 if event.type == QUIT:
+                    if clock_on: self.sequencer.stop()   
+                    self.receive_conn.close()
+                    self.sequencer.send_conn.close()
                     pygame.quit()
                     sys.exit()
                 if event.type == KEYUP: 
-                    if event.key == K_l:
-                        self.sequencer.delete_flag = False # Keyboard key L for delete
+                    if event.key == K_l: self.sequencer.delete_flag = False 
                 if event.type == KEYDOWN:
-                    if event.key == K_ESCAPE:
-                        pygame.quit()
-                        sys.exit()
-                    if event.key == K_o:   
-                        self.sequencer.recording = not self.sequencer.recording
-                    if event.key == K_m:   
-                        self.sequencer.met_on = not self.sequencer.met_on
-                    if event.key == K_p:
+                    if (display_step and event.key == K_q): display_step = False
+                    elif (not display_step and event.key == K_q): 
+                        if clock_on: self.sequencer.stop()   
+                        self.load_menu()
+                    
+                    if (display_step and event.key == K_w): step_bar_val = 0
+                    elif (not display_step and event.key == K_w): 
+                        if clock_on: self.sequencer.stop()   
+                        self.assn_menu()
+                    
+                    if (display_step and event.key == K_e): step_bar_val = 1
+                    elif (not display_step and event.key == K_e): display_step = True
+
+                    if (not display_step and event.key == K_r): 
+                        if clock_on: self.sequencer.stop()   
+                        self.load_menu(load=False)
+                    
+                    if event.key == K_l: self.sequencer.delete_flag = True
+                    if event.key == K_o: self.sequencer.recording = not self.sequencer.recording
+                    if event.key == K_m: self.sequencer.met_on = not self.sequencer.met_on
+                    if event.key == K_p or event.key == K_SPACE:
                         self.sequencer.toggle()
                         step = False
-                    if event.key == K_l:
-                        self.sequencer.delete_flag = True
-                    # PAD PLAY ---------------------------------------------- #
+                    
+                    # PAD PLAY 
                     if event.key in pad_keys:
                         self.play(event.key)
-                        # 3b) Record if applicable -------------------------  #
-                        if self.sequencer.recording and self.sequencer.state and not self.sequencer.delete_flag:
-                            self.sequencer.record(event.key, self.pads)
-                    if event.key == K_EQUALS:
-                        self.sequencer.bpm += 0.5
-                        self.sequencer.set_bpm()
-                    if event.key == K_MINUS:
-                        self.sequencer.bpm -= 0.5
-                        self.sequencer.set_bpm()
-                    if event.key == K_0:
-                        self.sequencer.tc += 1 
-                        if self.sequencer.tc == 5:    
-                            self.sequencer.tc = 4
-                    if event.key == K_9:
-                        self.sequencer.tc -= 1
-                        if self.sequencer.tc < 0:    
-                            self.sequencer.tc = 0                    
-                    if event.key == K_LEFTBRACKET:
-                        self.sequencer.change_seq(False)                        
-                    if event.key == K_RIGHTBRACKET:
-                        self.sequencer.change_seq(True)   
-                    if event.key == K_i:      
-                        volume = not volume              
-                if event.type == MOUSEBUTTONDOWN:
-                    if event.button == 1:
-                        click = True
-                if event.type == MOUSEBUTTONUP:
-                    if event.button == 1 and drag:
-                        drag = False
-                if event.type == pygame.MOUSEMOTION:
-                # Mixer knob drag --- make function -------------------------  #
-                    if drag:
-                        mouse_x, mouse_y = event.pos
-                        knob_drag.y = mouse_y 
-                        if (460-knob_drag.y)//8 <= 0:
-                            new_loc = 0
-                        elif (460-knob_drag.y)//8 >= 24:
-                            new_loc = 24
-                        else: new_loc = (460-knob_drag.y)//8
-                        if volume:
-                            self.pads[knob_idx].volume = new_loc
-                        else:
-                            self.pads[knob_idx].pitch = new_loc
+                        # Record if applicable 
+                        if (self.sequencer.recording and 
+                            self.sequencer.state and not 
+                            self.sequencer.delete_flag): self.sequencer.record(event.key, self.pads)
+                    
+                    if event.key == K_EQUALS: self.sequencer.set_bpm(0.5)
+                    if event.key == K_MINUS: self.sequencer.set_bpm(-0.5)
+                    if event.key == K_0: self.sequencer.set_tc(1)
+                    if event.key == K_9: self.sequencer.set_tc(-1)
+                    if event.key == K_LEFTBRACKET: self.sequencer.change_seq(-1)                      
+                    if event.key == K_RIGHTBRACKET: self.sequencer.change_seq(1)   
+                    if event.key == K_i: volume = not volume                          
+                
+                if event.type == MOUSEBUTTONDOWN and event.button == 1: click = True
+                if event.type == MOUSEBUTTONUP and event.button == 1: drag = False
+                # Mixer knob drag
+                if event.type == pygame.MOUSEMOTION and drag:
+                    mouse_x, mouse_y = event.pos
+                    knob_drag.y = mouse_y 
+                    new_loc = max(0, min(24, (460-knob_drag.y)//8))
+                    if volume: self.pads[knob_idx].volume = new_loc
+                    elif not volume: self.pads[knob_idx].pitch = new_loc
                     
             # DELETE ---------------------------------------------  #
             if self.sequencer.delete_flag and self.sequencer.state: # Delete note as realtime plays over it
@@ -692,26 +678,28 @@ class DrumMachine():
             if step:
                 self.sequencer.step_end()  
                 step = False  
+            
             # DRAW STUFF ----------------------------------------------------- #        
             self._draw_main(display_step)
             self.draw_mixer(volume)
             if display_step:
                 self.make_step_rects(step_bar_val)
                 self.draw_step(step_bar_val)
+            
             # DRAW CONTROLS ------------------------------------------------ #   
             pygame.draw.rect(self.screen, self.WHITE, playrec_rects[0])
             if self.sequencer.state:
                 pygame.draw.rect(self.screen, self.RED, playrec_rects[1])
             else: pygame.draw.rect(self.screen, self.WHITE, playrec_rects[1])
 
-            pygame.draw.rect(self.screen, self.RED, playrec_rects[2])
+            pygame.draw.rect(self.screen, self.WHITE, playrec_rects[2])
             if self.sequencer.recording:
                 pygame.draw.rect(self.screen, self.RED, playrec_rects[3])
             else: pygame.draw.rect(self.screen, self.WHITE, playrec_rects[3])
             
-            for r in playrec_text:
-                self.screen.blit(r[0], r[1])  
-            
+            for r in func_rects:
+                pygame.draw.rect(self.screen, self.WHITE, r)
+
             for r in buttons_down:
                 pygame.draw.rect(self.screen, self.WHITE, r)
             if not self.sequencer.met_on:
@@ -722,14 +710,10 @@ class DrumMachine():
             if self.sequencer.met_on:
                 pygame.draw.rect(self.screen, self.RED, buttons_up[3])    
             
-            for r in text_rects:
-                self.screen.blit(r[0], r[1])
-
-            for r in buttons_text1:
-                self.screen.blit(r[0], r[1])
-                
-            for r in buttons_text2:
-                self.screen.blit(r[0], r[1])
+            self.screen.blits(playrec_text)
+            self.screen.blits(text_rects)
+            self.screen.blits(buttons_text1)
+            self.screen.blits(buttons_text2)
 
             # MIX/TUNE ------------------------------------------------------ #
             pygame.draw.rect(self.screen, self.WHITE, mix_tune_rect,0)
@@ -751,7 +735,7 @@ class DrumMachine():
         DIR_CONTENTS = os.listdir("DISKS")
         #print(os.getcwd())
         DIR_CONTENTS.sort()
-        #DIR_CONTENTS.remove("BLANK")
+        DIR_CONTENTS.remove("BLANK")
         selected = np.zeros((len(DIR_CONTENTS)), dtype=int)
         button_select = None
        
@@ -764,7 +748,7 @@ class DrumMachine():
             for i,text in enumerate(DIR_CONTENTS):
                 self.draw_text(text, self.font, (255, 255, 255), self.screen, 20, 60+20*i)
                 button = pygame.Rect(5, 62+20*i, 10, 10)
-                pygame.draw.rect(self.screen, (255, 0, 0), button)
+                pygame.draw.rect(self.screen, (255, 255, 255), button)
                 buttons.append(button)
 
             # Mouse pos and collision check ------------------------------    #
@@ -782,11 +766,13 @@ class DrumMachine():
             
             # Color Select Box WHITE if selected ----------------------- #      
             if button_select:
-                pygame.draw.rect(self.screen, self.WHITE, button_select)            
+                pygame.draw.rect(self.screen, self.RED, button_select)            
             
             click = False      
             for event in pygame.event.get():
                 if event.type == QUIT:
+                    self.receive_conn.close()
+                    self.sequencer.send_conn.close()
                     pygame.quit()
                     sys.exit()
                 if event.type == KEYDOWN:
@@ -803,7 +789,7 @@ class DrumMachine():
                             self.snd_files = snd_files
                             self.pads, self.sounds,seqs = load_disk(snd_path, self.pads, snd_files)
                             self.sequencer.sequences = seqs
-                            self.sequencer.change_seq(None)
+                            self.sequencer.change_seq(0)
                         if not load:
                             disk_path = "DISKS/"+DISK+"/"
                             #print(disk_path)
@@ -836,7 +822,7 @@ class DrumMachine():
             for i,text in enumerate(snd_file_text):
                 self.draw_text(text, self.font, (255, 255, 255), self.screen, 350, 60+20*i)
                 button = pygame.Rect(335, 62+20*i, 10, 10)
-                pygame.draw.rect(self.screen, (255, 0, 0), button)
+                pygame.draw.rect(self.screen, (0, 255, 0), button)
                 buttons.append(button)
            
             # Pads ---------------------------------------------------------- #
@@ -848,7 +834,7 @@ class DrumMachine():
                     file_text = file_text[0:40]
                 self.draw_text(file_text, self.font, (255, 255, 255), self.screen, 40, 60+20*i)
                 button = pygame.Rect(5, 62+20*i, 10, 10)
-                pygame.draw.rect(self.screen, (255, 0, 0), button)
+                pygame.draw.rect(self.screen, (255, 255,255), button)
                 buttons2.append(button)
                 self.draw_text(str(self.pads[i].channel_out), self.font, (255, 255, 255), 
                                                            self.screen, 30, 60+20*i)   
@@ -864,7 +850,7 @@ class DrumMachine():
                 chan = self.pads[pad_idx].channel_out
             
             if checked_rect and assn:
-                pygame.draw.rect(self.screen, self.WHITE, checked_rect)
+                pygame.draw.rect(self.screen, self.RED, checked_rect)
                 self.pads[pad_idx].channel_out = chan # Set pad channel ------ #
             
             # Select Sound for pad ---------------------------------------    # 
@@ -878,6 +864,8 @@ class DrumMachine():
             click = False      
             for event in pygame.event.get():
                 if event.type == QUIT:
+                    self.receive_conn.close()
+                    self.sequencer.send_conn.close()
                     pygame.quit()
                     sys.exit()
                 if event.type == KEYDOWN:
