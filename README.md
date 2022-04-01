@@ -24,7 +24,7 @@ There are two ways to use pyDM404.
 2) Run from source
 
 # 1. Executable
-There is an executable available for Windows (7/8/10) and for Ubuntu Linux 20.04 LTS (Focal Fossa) that were packaged with [pyisnatller](https://pypi.org/project/pyinstaller/). To obtain the executable, go to the [release](https://github.com/sitaber/pyDM404/releases) page and download the proper zip file for your platform, unzip and open the unzipped folder. 
+There is an executable available for Windows (7/8/10) and for Ubuntu Linux 20.04 LTS (Focal Fossa) that were packaged with [pyinstaller](https://pypi.org/project/pyinstaller/). To obtain the executable, go to the [release](https://github.com/sitaber/pyDM404/releases) page and download the proper zip file for your platform, unzip and open the unzipped folder. 
 To run:
 - `Windows`: Just double click `pydm404-win64.exe` and your good to go
 - `Linux`: Make sure the program has permission to run
