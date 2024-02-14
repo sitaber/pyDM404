@@ -1,0 +1,212 @@
+{
+  "global": {
+    "bpm": 120,
+    "met": true,
+    "quantize": 0
+  },
+  "seqs": [
+    {
+      "name": "(unused)",
+      "swing": 0
+    },
+    {
+      "name": "(unused)",
+      "swing": 0
+    },
+    {
+      "name": "(unused)",
+      "swing": 0
+    },
+    {
+      "name": "(unused)",
+      "swing": 0
+    },
+    {
+      "name": "(unused)",
+      "swing": 0
+    },
+    {
+      "name": "(unused)",
+      "swing": 0
+    },
+    {
+      "name": "(unused)",
+      "swing": 0
+    },
+    {
+      "name": "(unused)",
+      "swing": 0
+    },
+    {
+      "name": "(unused)",
+      "swing": 0
+    },
+    {
+      "name": "(unused)",
+      "swing": 0
+    },
+    {
+      "name": "(unused)",
+      "swing": 0
+    },
+    {
+      "name": "(unused)",
+      "swing": 0
+    },
+    {
+      "name": "(unused)",
+      "swing": 0
+    },
+    {
+      "name": "(unused)",
+      "swing": 0
+    },
+    {
+      "name": "(unused)",
+      "swing": 0
+    },
+    {
+      "name": "(unused)",
+      "swing": 0
+    },
+    {
+      "name": "(unused)",
+      "swing": 0
+    },
+    {
+      "name": "(unused)",
+      "swing": 0
+    },
+    {
+      "name": "(unused)",
+      "swing": 0
+    },
+    {
+      "name": "(unused)",
+      "swing": 0
+    },
+    {
+      "name": "(unused)",
+      "swing": 0
+    },
+    {
+      "name": "(unused)",
+      "swing": 0
+    },
+    {
+      "name": "(unused)",
+      "swing": 0
+    },
+    {
+      "name": "(unused)",
+      "swing": 0
+    },
+    {
+      "name": "(unused)",
+      "swing": 0
+    },
+    {
+      "name": "(unused)",
+      "swing": 0
+    },
+    {
+      "name": "(unused)",
+      "swing": 0
+    },
+    {
+      "name": "(unused)",
+      "swing": 0
+    },
+    {
+      "name": "(unused)",
+      "swing": 0
+    },
+    {
+      "name": "(unused)",
+      "swing": 0
+    },
+    {
+      "name": "(unused)",
+      "swing": 0
+    },
+    {
+      "name": "(unused)",
+      "swing": 0
+    },
+    {
+      "name": "(unused)",
+      "swing": 0
+    },
+    {
+      "name": "(unused)",
+      "swing": 0
+    },
+    {
+      "name": "(unused)",
+      "swing": 0
+    },
+    {
+      "name": "(unused)",
+      "swing": 0
+    },
+    {
+      "name": "(unused)",
+      "swing": 0
+    },
+    {
+      "name": "(unused)",
+      "swing": 0
+    },
+    {
+      "name": "(unused)",
+      "swing": 0
+    },
+    {
+      "name": "(unused)",
+      "swing": 0
+    }
+  ],
+  "songs": [
+    {
+      "name": "(unused)",
+      "seqs": [],
+      "bpm": 120
+    },
+    {
+      "name": "(unused)",
+      "seqs": [],
+      "bpm": 120
+    },
+    {
+      "name": "(unused)",
+      "seqs": [],
+      "bpm": 120
+    },
+    {
+      "name": "(unused)",
+      "seqs": [],
+      "bpm": 120
+    },
+    {
+      "name": "(unused)",
+      "seqs": [],
+      "bpm": 120
+    },
+    {
+      "name": "(unused)",
+      "seqs": [],
+      "bpm": 120
+    },
+    {
+      "name": "(unused)",
+      "seqs": [],
+      "bpm": 120
+    },
+    {
+      "name": "(unused)",
+      "seqs": [],
+      "bpm": 120
+    }
+  ],
+  "pads": []
+}

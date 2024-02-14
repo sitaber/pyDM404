@@ -1,64 +1,92 @@
 # pyDM404
-The pyDM404 (or python Drum Machine 404) is a cross platform drum machine written in Python. The source code will run on any machine that can install its dependencies. Executable binaries are available for Windows (7/10) and Ubuntu Linux 20.04 LTS (Focal Fossa).
+The pyDM404 (or python Drum Machine 404) is a cross platform drum machine written in Python. The source code will run on any machine that can install its dependencies. Executable binaries are available for Windows (7/8/10 - Windows 11 is untested) and any Ubuntu based Linux 20.04 LTS (Focal Fossa) or greater. (May work with other debian based distros)
 
-The pyDM404 is more of a toy application than a serious piece of software; a project to explore what one can create with Pygame. Miscellaneous bugs, the clunky user interface and other "features" impart a unique flavor to the application. The pyDM404 works great for drums, and can be used like old school samplers, such as the SP1200 or MPC60, to make whole beats.  
+The pyDM404 is a semi-serious drum sequencer/machine program. The idea is to emulate the look, feel and use (not the sound) of 90’s drum machines. Therefore, the interface is meant to be limited and somewhat clunky. There are not a bunch of bells and whistles in terms of sound editing etc., but a user can create nice drum tracks with the pyDM404 or an entire song using samples.  
 
-**UPDATE**: Version 1.2 is now out. See [Change Log](#Change-Log) for details and [releases](https://github.com/sitaber/pyDM404/releases) for the new executable
+## What does pyDM404 mean?
+py (python) DM (Drum Machine) 404, which is half of 808 (think TR-808), or a play on “resource not found” server responses.
 
-![Screenshot](assets/screenshot.png)
+## Why was the pyDM404 made?
+It was made to provide a simple drum sequencer with sound editing features, that was cross-platform compatible and free to use. It was also an excuse to explore the Python library Pygame and to learn about building a whole application (and just for fun!)
+
+**UPDATE**: Version 2.0 has been released!. Version 2.0 brings major changes to the application, and is not backwards compatible with Version 1.2 (or older) files.
+
+See [Change Log](#Change-Log) for details and [releases](https://github.com/sitaber/pyDM404/releases) for the new executable.
+
+![Screenshot](assets/Screenshot.png)
 
 # Features
-- Tuning algorithm based on the SP1200's. Adjust sounds by +/- 12 semitones
+- Tuning algorithm to adjust sounds by +/- 12 semitones
 - Adjustable volume for each sound/channel
 - Separate channels/choke groups, 8 in total (sounds in same group cut one another off)
-- Up to 8 sounds loaded simultaneously
+- Up to 32 sounds loaded simultaneously
 - A Metronome with clicks at fixed quarter note intervals
-- Auto-correct: Quarter note, 8th note, 16th, 16th triplet, and "hi-rez" 32nd
+- Auto-correct/Quantize notes to: Quarter, 8th, 16th, 16th triplet, 32nd, 32nd triplets notes or "hi-rez"
 - Real time recording
 - "Step edit" mode (more like a clickable grid)
 - Save and load with "disks"
+- Sound editor (truncate, chop, reverse or apply low-pass filter)
+- Several "stock sound" for instant noise making
 
 # Installation
-There are two ways to use pyDM404. 
+There are two ways to use pyDM404.
 1) Run an executable
 2) Run from source
 
 # 1. Executable
-There is an executable available for Windows (7/8/10) and for Ubuntu Linux 20.04 LTS (Focal Fossa) that were packaged with [pyinstaller](https://pypi.org/project/pyinstaller/). To obtain the executable, go to the [release](https://github.com/sitaber/pyDM404/releases) page and download the proper zip file for your platform, unzip and open the unzipped folder. 
+There is an executable available for Windows (7/8/10) and for Ubuntu Linux 20.04 LTS or greater. The executable binaries were packaged with [pyinstaller](https://pypi.org/project/pyinstaller/). To obtain the executable, go to the [release](https://github.com/sitaber/pyDM404/releases) page and download the proper zip file for your platform, unzip and open the unzipped folder.
+
 To run:
-- `Windows`: Just double click `pydm404-win64.exe` and your good to go
+- `Windows`: Just double click `pyDM404.exe` and your good to go
 - `Linux`: Make sure the program has permission to run
     - Press <kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>T</kbd> to open the shell, navigate to the unzipped folder, change the file permissions for the executable, then run it
     ```bash
     $ cd path/to/extracted/folder
-    $ chmod +x pydm404
+    $ chmod +x pyDM404
     $ ./pydm404
     ```
-**NOTE**: You must run the executable from the pyDM404 directory
 
-## Quick Start
-Now that you have the executable, how do you use pyDM404? See the quick start [manual](assets/QuickStart.pdf)
+**NOTE**: You can run the executable by double clicking, from the anywhere on the command line or by making a shortcut (Windows) or a `.desktop` file (Linux).
+
+## User Guide
+Now that you have the executable, how do you use pyDM404? See the [User Guide](Users Guide.pdf)
 
 # 2. Run From Source
 To run the source code you will need
 
-- Python >= 3.7 
+- Python >= 3.8.10 (with tkinter)
 - Pygame >= 2.1.2
-- NumPy >= 1.15 
+- NumPy >= 1.15
 
-Pygame and numpy provide almost everything for us to create the application, and what they don't, we implement with pure Python. 
-
-## How it Works
-The code is broken into 3 parts:
-- `main.py`: Provides safe guard to run the application
-- `app.py`: The nuts and bolts (one big file)
-- `clock.py`: Sperate process launched from `app.py`. Modifed from
-https://github.com/ElliotGarbus/MidiClockGenerator
-    - To get good timings for the sequencer, we spawn a child process to run a clock that it synchronizes to. 
-
-Once you have met all dependacies, download/clone the repo and run `main.py` to start the application
+Once you have met all dependencies, download/clone the repo or get the source code from the [release](https://github.com/sitaber/pyDM404/releases) page and run `main.py` to start the application
 
 # Change Log
+## Version 2.0
+### Improvements:
+- Consolidated all functionality to display in "LCD" area.
+- Fixed timing issues on Windows OS
+- A more detailed [Users Guide](Users Guide.pdf) to explain functionality and features
+
+### New Features:
+- App now starts with several stock drum sounds loaded
+- Application level volume control
+- Added sound Banks A-D: Can now have 32 sounds loaded instead of only 8
+- Ability to copy a sequence to another sequence
+- Can initialize sequence from 1 bar to 8
+- Song mode - select order of sequence playback
+- Sound editor (with undo)
+    - Low-pass filter
+    - Reverse sound
+    - Truncate start and/or end of sound
+    - Sound chopper/slicer: Chop/slice a sound into a max of 8 chops/slices and automatically assign to pads
+- Can apply Swing to sequences
+- Clickable Pads to play back sounds
+- Better on screen buttons to interact with LCD and app parameters
+- Other enhancements to the Grid Sequence editor
+
+### Know Issues:
+On Windows, moving the application window during playback pauses the app. This is a known issue with SDL and Windows
+
 ## Version 1.2
 ### Controls
 - <kbd>SPACEBAR</kbd>: can now be used to toggle play
@@ -71,7 +99,7 @@ Once you have met all dependacies, download/clone the repo and run `main.py` to 
     - **LOAD/SAVE** menus: Made the selection boxes white when not selected and red when selected
     - **ASSN SND** menu: Made the selection boxes white when not selected and red when selected. Select-able sounds now have a green select box
     - **MAIN SCREEN**: **REC** button is no longer red
-    
+
 
 ### BEHAVIOR
 - Sequencer now stops playback when entering the **LOAD/SAVE** or **ASSN SND** menus
@@ -81,28 +109,3 @@ Once you have met all dependacies, download/clone the repo and run `main.py` to 
 - Added checks to "cleanup" the clock process more effectively  
 - Flattened large sections of the code to improve readability
 - Moved related actions into Sequencer class as methods
-  
-# TODO
-List of some ideas for continuing the project 
-
-### Improvements:
-- More intuitive/informative load and save screens
-- Assign Sounds interface
-    - Ability to press keyboard key for __PAD__ selection
-    - Headers for columns to improve clarity (PAD, CHANNEL, SOUND)
-
-### Features:
-In no particular order
-- Copy sequence to another sequence
-- Adjustable sequence length
-- Ability to type in BPM and save per sequence
-- Song mode - select order of sequence playback
-- Low pass filters that can be set on a channel
-- True step edit / navigation with the arrow keys
-- Multi-Pitch Mode: A sound can be pitched across the keyboard keys
-- Multi-Level Mode: Each keyboard key plays assigned sound at different velocities
-- Banks A-D: Have 32 sounds loaded instead of only 8
-    - Requires changes to step edit grid
-- Clickable Pads to play back sounds
-
-

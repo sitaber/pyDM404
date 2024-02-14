@@ -1,0 +1,278 @@
+{
+  "global": {
+    "bpm": 90,
+    "met": false,
+    "quantize": 0
+  },
+  "seqs": [
+    {
+      "name": "",
+      "swing": 0
+    },
+    {
+      "name": "(unused)",
+      "swing": 0
+    },
+    {
+      "name": "(unused)",
+      "swing": 0
+    },
+    {
+      "name": "(unused)",
+      "swing": 0
+    },
+    {
+      "name": "(unused)",
+      "swing": 0
+    },
+    {
+      "name": "(unused)",
+      "swing": 0
+    },
+    {
+      "name": "(unused)",
+      "swing": 0
+    },
+    {
+      "name": "(unused)",
+      "swing": 0
+    },
+    {
+      "name": "(unused)",
+      "swing": 0
+    },
+    {
+      "name": "(unused)",
+      "swing": 0
+    },
+    {
+      "name": "(unused)",
+      "swing": 0
+    },
+    {
+      "name": "(unused)",
+      "swing": 0
+    },
+    {
+      "name": "(unused)",
+      "swing": 0
+    },
+    {
+      "name": "(unused)",
+      "swing": 0
+    },
+    {
+      "name": "(unused)",
+      "swing": 0
+    },
+    {
+      "name": "(unused)",
+      "swing": 0
+    },
+    {
+      "name": "(unused)",
+      "swing": 0
+    },
+    {
+      "name": "(unused)",
+      "swing": 0
+    },
+    {
+      "name": "(unused)",
+      "swing": 0
+    },
+    {
+      "name": "(unused)",
+      "swing": 0
+    },
+    {
+      "name": "(unused)",
+      "swing": 0
+    },
+    {
+      "name": "(unused)",
+      "swing": 0
+    },
+    {
+      "name": "(unused)",
+      "swing": 0
+    },
+    {
+      "name": "(unused)",
+      "swing": 0
+    },
+    {
+      "name": "(unused)",
+      "swing": 0
+    },
+    {
+      "name": "(unused)",
+      "swing": 0
+    },
+    {
+      "name": "(unused)",
+      "swing": 0
+    },
+    {
+      "name": "(unused)",
+      "swing": 0
+    },
+    {
+      "name": "(unused)",
+      "swing": 0
+    },
+    {
+      "name": "(unused)",
+      "swing": 0
+    },
+    {
+      "name": "(unused)",
+      "swing": 0
+    },
+    {
+      "name": "(unused)",
+      "swing": 0
+    },
+    {
+      "name": "(unused)",
+      "swing": 0
+    },
+    {
+      "name": "(unused)",
+      "swing": 0
+    },
+    {
+      "name": "(unused)",
+      "swing": 0
+    },
+    {
+      "name": "(unused)",
+      "swing": 0
+    },
+    {
+      "name": "(unused)",
+      "swing": 0
+    },
+    {
+      "name": "(unused)",
+      "swing": 0
+    },
+    {
+      "name": "(unused)",
+      "swing": 0
+    },
+    {
+      "name": "(unused)",
+      "swing": 0
+    }
+  ],
+  "songs": [
+    {
+      "name": "(unused)",
+      "seqs": [],
+      "bpm": 120
+    },
+    {
+      "name": "(unused)",
+      "seqs": [],
+      "bpm": 120
+    },
+    {
+      "name": "(unused)",
+      "seqs": [],
+      "bpm": 120
+    },
+    {
+      "name": "(unused)",
+      "seqs": [],
+      "bpm": 120
+    },
+    {
+      "name": "(unused)",
+      "seqs": [],
+      "bpm": 120
+    },
+    {
+      "name": "(unused)",
+      "seqs": [],
+      "bpm": 120
+    },
+    {
+      "name": "(unused)",
+      "seqs": [],
+      "bpm": 120
+    },
+    {
+      "name": "(unused)",
+      "seqs": [],
+      "bpm": 120
+    }
+  ],
+  "pads": [
+    {
+      "sound_file": "01-Cymatics - Lofi Melody Loop 1 - 70 BPM G Maj.wav", 
+      "pitch": 17, 
+      "channel": 1, 
+      "volume": 13,
+      "bank": "A",
+      "ekey": 97 
+    }, 
+    {
+      "sound_file": "02-Cymatics - Lofi Melody Loop 1 - 70 BPM G Maj.wav", 
+      "pitch": 17, 
+      "channel": 1, 
+      "volume": 13,
+      "bank": "A",
+      "ekey": 115 
+    }, 
+    {
+      "sound_file": "03-Cymatics - Lofi Melody Loop 1 - 70 BPM G Maj.wav", 
+      "pitch": 17, 
+      "channel": 1, 
+      "volume": 13,
+      "bank": "A",
+      "ekey": 100
+    }, 
+    {
+      "sound_file": "04-Cymatics - Lofi Melody Loop 1 - 70 BPM G Maj.wav", 
+      "pitch": 17, 
+      "channel": 1, 
+      "volume": 13,
+      "bank": "A",
+      "ekey": 102
+    }, 
+    {
+      "sound_file": "LBD_Hihat_2.wav", 
+      "pitch": 12, 
+      "channel": 4, 
+      "volume": 24,
+      "bank": "A",
+      "ekey": 103 
+    }, 
+    {
+      "sound_file": "LBD_Hihat_2.wav", 
+      "pitch": 12, 
+      "channel": 4, 
+      "volume": 17,
+      "bank": "A",
+      "ekey": 104 
+    }, 
+    {
+      "sound_file": "LBD_Kick_2.wav", 
+      "pitch": 10, 
+      "channel": 3, 
+      "volume": 24,
+      "bank": "A",
+      "ekey": 106 
+    }, 
+    {
+      "sound_file": "LBD_Snare_5.wav", 
+      "pitch": 10, 
+      "channel": 2, 
+      "volume": 24,
+      "bank": "A",
+      "ekey": 107
+      }
+  ]
+ }
+      

@@ -1,0 +1,261 @@
+{
+  "global": {
+    "bpm": 120,
+    "met": true,
+    "quantize": 0
+  },
+  "seqs": [
+    {
+      "name": "",
+      "swing": 0
+    },
+    {
+      "name": "(unused)",
+      "swing": 0
+    },
+    {
+      "name": "(unused)",
+      "swing": 0
+    },
+    {
+      "name": "(unused)",
+      "swing": 0
+    },
+    {
+      "name": "(unused)",
+      "swing": 0
+    },
+    {
+      "name": "(unused)",
+      "swing": 0
+    },
+    {
+      "name": "(unused)",
+      "swing": 0
+    },
+    {
+      "name": "(unused)",
+      "swing": 0
+    },
+    {
+      "name": "(unused)",
+      "swing": 0
+    },
+    {
+      "name": "(unused)",
+      "swing": 0
+    },
+    {
+      "name": "(unused)",
+      "swing": 0
+    },
+    {
+      "name": "(unused)",
+      "swing": 0
+    },
+    {
+      "name": "(unused)",
+      "swing": 0
+    },
+    {
+      "name": "(unused)",
+      "swing": 0
+    },
+    {
+      "name": "(unused)",
+      "swing": 0
+    },
+    {
+      "name": "(unused)",
+      "swing": 0
+    },
+    {
+      "name": "(unused)",
+      "swing": 0
+    },
+    {
+      "name": "(unused)",
+      "swing": 0
+    },
+    {
+      "name": "(unused)",
+      "swing": 0
+    },
+    {
+      "name": "(unused)",
+      "swing": 0
+    },
+    {
+      "name": "(unused)",
+      "swing": 0
+    },
+    {
+      "name": "(unused)",
+      "swing": 0
+    },
+    {
+      "name": "(unused)",
+      "swing": 0
+    },
+    {
+      "name": "(unused)",
+      "swing": 0
+    },
+    {
+      "name": "(unused)",
+      "swing": 0
+    },
+    {
+      "name": "(unused)",
+      "swing": 0
+    },
+    {
+      "name": "(unused)",
+      "swing": 0
+    },
+    {
+      "name": "(unused)",
+      "swing": 0
+    },
+    {
+      "name": "(unused)",
+      "swing": 0
+    },
+    {
+      "name": "(unused)",
+      "swing": 0
+    },
+    {
+      "name": "(unused)",
+      "swing": 0
+    },
+    {
+      "name": "(unused)",
+      "swing": 0
+    },
+    {
+      "name": "(unused)",
+      "swing": 0
+    },
+    {
+      "name": "(unused)",
+      "swing": 0
+    },
+    {
+      "name": "(unused)",
+      "swing": 0
+    },
+    {
+      "name": "(unused)",
+      "swing": 0
+    },
+    {
+      "name": "(unused)",
+      "swing": 0
+    },
+    {
+      "name": "(unused)",
+      "swing": 0
+    },
+    {
+      "name": "(unused)",
+      "swing": 0
+    },
+    {
+      "name": "(unused)",
+      "swing": 0
+    }
+  ],
+  "songs": [
+    {
+      "name": "(unused)",
+      "seqs": [],
+      "bpm": 120
+    },
+    {
+      "name": "(unused)",
+      "seqs": [],
+      "bpm": 120
+    },
+    {
+      "name": "(unused)",
+      "seqs": [],
+      "bpm": 120
+    },
+    {
+      "name": "(unused)",
+      "seqs": [],
+      "bpm": 120
+    },
+    {
+      "name": "(unused)",
+      "seqs": [],
+      "bpm": 120
+    },
+    {
+      "name": "(unused)",
+      "seqs": [],
+      "bpm": 120
+    },
+    {
+      "name": "(unused)",
+      "seqs": [],
+      "bpm": 120
+    },
+    {
+      "name": "(unused)",
+      "seqs": [],
+      "bpm": 120
+    }
+  ],
+  "pads": [
+    {
+      "sound_file": "Boom-Kick.wav",
+      "pitch": 12,
+      "channel": 1,
+      "volume": 12,
+      "bank": "A",
+      "ekey": 97
+    },
+    {
+      "sound_file": "Kick.wav",
+      "pitch": 12,
+      "channel": 1,
+      "volume": 12,
+      "bank": "A",
+      "ekey": 115
+    },
+    {
+      "sound_file": "Snare.wav",
+      "pitch": 12,
+      "channel": 2,
+      "volume": 12,
+      "bank": "A",
+      "ekey": 100
+    },
+    {
+      "sound_file": "Hat-Closed.wav",
+      "pitch": 12,
+      "channel": 3,
+      "volume": 12,
+      "bank": "A",
+      "ekey": 102
+    },
+    {
+      "sound_file": "Hat-Open.wav",
+      "pitch": 12,
+      "channel": 3,
+      "volume": 12,
+      "bank": "A",
+      "ekey": 103
+    },
+    {
+      "sound_file": "Tom.wav",
+      "pitch": 12,
+      "channel": 4,
+      "volume": 12,
+      "bank": "A",
+      "ekey": 104
+    }
+  ]
+}
