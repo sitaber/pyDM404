@@ -49,7 +49,7 @@ To run:
 **NOTE**: You can run the executable by double clicking, from the anywhere on the command line or by making a shortcut (Windows) or a `.desktop` file (Linux).
 
 ## User Guide
-Now that you have the executable, how do you use pyDM404? See the [User Guide](Users Guide.pdf)
+Now that you have the executable, how do you use pyDM404? See the [User Guide](https://github.com/sitaber/pyDM404/blob/main/Users%20Guide.pdf)
 
 # 2. Run From Source
 To run the source code you will need
@@ -65,7 +65,7 @@ Once you have met all dependencies, download/clone the repo or get the source co
 ### Improvements:
 - Consolidated all functionality to display in "LCD" area.
 - Fixed timing issues on Windows OS
-- A more detailed [Users Guide](Users Guide.pdf) to explain functionality and features
+- A more detailed [User Guide](https://github.com/sitaber/pyDM404/blob/main/Users%20Guide.pdf) to explain functionality and features
 
 ### New Features:
 - App now starts with several stock drum sounds loaded
