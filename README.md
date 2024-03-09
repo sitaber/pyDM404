@@ -1,3 +1,7 @@
+**UPDATE 02/24/2024**: Version 2.0 has been released!. Version 2.0 brings major changes to the application, and is not backwards compatible with Version 1.2 (or older) files.
+
+See [Change Log](#Change-Log) for details and [releases](https://github.com/sitaber/pyDM404/releases) for the new executable.
+
 # pyDM404
 The pyDM404 (or python Drum Machine 404) is a cross platform drum machine written in Python. The source code will run on any machine that can install its dependencies. Executable binaries are available for Windows (7/8/10 - Windows 11 is untested) and any Ubuntu based Linux 20.04 LTS (Focal Fossa) or greater. (May work with other debian based distros)
 
@@ -8,10 +12,6 @@ py (python) DM (Drum Machine) 404, which is half of 808 (think TR-808), or a pla
 
 ## Why was the pyDM404 made?
 It was made to provide a simple drum sequencer with sound editing features, that was cross-platform compatible and free to use. It was also an excuse to explore the Python library Pygame and to learn about building a whole application (and just for fun!)
-
-**UPDATE**: Version 2.0 has been released!. Version 2.0 brings major changes to the application, and is not backwards compatible with Version 1.2 (or older) files.
-
-See [Change Log](#Change-Log) for details and [releases](https://github.com/sitaber/pyDM404/releases) for the new executable.
 
 ![Screenshot](assets/Screenshot.png)
 
